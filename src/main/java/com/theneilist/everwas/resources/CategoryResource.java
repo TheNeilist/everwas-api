@@ -23,6 +23,6 @@ public class CategoryResource {
     @GET
     @Timed
     public List<Category> listCategories() {
-        return Arrays.asList(new Category(1, 2, "test"));
+        return Arrays.asList(new Category(3, 4, "asdf"));
     }
 }
