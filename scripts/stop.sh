@@ -1,3 +1,9 @@
-PID=$(cat /tmp/everwas-api-pid)
-sudo kill -9 $PID
-rm /tmp/everwas-api-pid:
+if [ -a /tmp/everwas-api-pid ]
+        then
+                PID=$(cat /tmp/everwas-api-pid)
+		echo "Killing process $PID"
+                sudo kill -9 $PID
+                rm -f /tmp/everwas-api-pid
+	else
+		echo "pid file does not exist"
+fi
