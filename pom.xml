@@ -24,9 +24,9 @@
             <version>${dropwizard.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.dropwizard</groupId>
-            <artifactId>dropwizard-configuration</artifactId>
-            <version>${dropwizard.version}</version>
+            <groupId>de.thomaskrille</groupId>
+            <artifactId>dropwizard-template-config</artifactId>
+            <version>1.4.0</version>
         </dependency>
         <dependency>
             <groupId>postgresql</groupId>

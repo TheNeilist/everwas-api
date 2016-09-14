@@ -1,7 +1,10 @@
 package com.theneilist.everwas;
 
+import com.google.common.base.Charsets;
 import com.theneilist.everwas.dao.CategoryDao;
 import com.theneilist.everwas.resources.CategoryResource;
+import de.thomaskrille.dropwizard_template_config.TemplateConfigBundle;
+import de.thomaskrille.dropwizard_template_config.TemplateConfigBundleConfiguration;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
@@ -24,11 +27,9 @@ public class EverwasApplication extends Application<EverwasConfiguration> {
     @Override
     public void initialize(Bootstrap<EverwasConfiguration> bootstrap) {
 
-        bootstrap.setConfigurationSourceProvider(
-                new SubstitutingSourceProvider(bootstrap.getConfigurationSourceProvider(),
-                        new EnvironmentVariableSubstitutor()
-                )
-        );
+        bootstrap.addBundle(new TemplateConfigBundle(
+                new TemplateConfigBundleConfiguration().charset(Charsets.US_ASCII)
+        ));
 
     }
 
