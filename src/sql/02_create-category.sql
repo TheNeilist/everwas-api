@@ -12,5 +12,4 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE everwas.category ADD PRIMARY KEY ("id");
-ALTER TABLE everwas.category
-  OWNER TO everwas;
+ALTER TABLE everwas.category OWNER TO everwas;
