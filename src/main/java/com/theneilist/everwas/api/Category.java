@@ -6,15 +6,15 @@ public class Category {
 
     private long id;
     private long parentId;
-    private String title;
+    private String name;
 
     public Category() {
     }
 
-    public Category(long id, long parentId, String title) {
+    public Category(long id, long parentId, String name) {
         this.id = id;
         this.parentId = parentId;
-        this.title = title;
+        this.name = name;
     }
 
     @JsonProperty
@@ -28,7 +28,7 @@ public class Category {
     }
 
     @JsonProperty
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 }
