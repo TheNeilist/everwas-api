@@ -11,6 +11,15 @@ public class Category {
     public Category() {
     }
 
+    public Category(String name) {
+        this.name = name;
+    }
+
+    public Category(long parentId, String name) {
+        this.parentId = parentId;
+        this.name = name;
+    }
+
     public Category(long id, long parentId, String name) {
         this.id = id;
         this.parentId = parentId;
