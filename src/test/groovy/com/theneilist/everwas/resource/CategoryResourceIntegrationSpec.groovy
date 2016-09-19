@@ -5,7 +5,7 @@ import com.theneilist.everwas.api.Category
 import static io.restassured.RestAssured.*
 import spock.lang.Specification
 
-class CategoryResourceIntegegrationSpec extends Specification {
+class CategoryResourceIntegrationSpec extends Specification {
 
     def "test category crud"() {
 
