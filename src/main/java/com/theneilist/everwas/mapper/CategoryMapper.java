@@ -10,7 +10,11 @@ import java.sql.SQLException;
 public class CategoryMapper implements ResultSetMapper<Category> {
 
     public Category map(int index, ResultSet r, StatementContext ctx) throws SQLException {
-        return new Category(r.getLong("id"), r.getLong("parent_id"), r.getString("name"));
+        return new Category(
+                r.getLong("id"),
+                r.getLong("parent_id"),
+                r.getString("name")
+        );
     }
 
 }
