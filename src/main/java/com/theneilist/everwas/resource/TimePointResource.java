@@ -25,7 +25,7 @@ public class TimePointResource {
 
     @POST
     @Timed
-    public Response createCategory(final TimePoint timePoint) {
+    public Response create(final TimePoint timePoint) {
         //TODO: validate category id
         long timePointId = this.timePointDao.insert(timePoint);
         OffsetDateTime time = OffsetDateTime.from(timePoint.getTime().atZoneSameInstant(DefaultTimeZone.getZoneId()));
@@ -38,7 +38,7 @@ public class TimePointResource {
     @GET
     @Path("{id}")
     @Timed
-    public Response getTimePoint(@PathParam("id") Long id) {
+    public Response get(@PathParam("id") Long id) {
         final Optional<TimePoint> timePoint;
         try {
             timePoint = timePointDao.findById(id);

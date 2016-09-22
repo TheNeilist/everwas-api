@@ -25,7 +25,7 @@ public class CategoryResource {
 
     @POST
     @Timed
-    public Response createCategory(final Category category) {
+    public Response create(final Category category) {
         long categoryId = this.categoryDao.insert(category);
         return Response
                 .status(Response.Status.CREATED)
@@ -36,7 +36,7 @@ public class CategoryResource {
     @GET
     @Path("{id}")
     @Timed
-    public Response getCategory(@PathParam("id") Long id) {
+    public Response get(@PathParam("id") Long id) {
         final Optional<Category> category = categoryDao.findById(id);
         return category.isPresent() ?
                 Response.ok().entity(category.get()).build() :

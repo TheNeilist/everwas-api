@@ -2,8 +2,10 @@ package com.theneilist.everwas;
 
 import com.google.common.base.Charsets;
 import com.theneilist.everwas.dao.CategoryDao;
+import com.theneilist.everwas.dao.TimePeriodDao;
 import com.theneilist.everwas.dao.TimePointDao;
 import com.theneilist.everwas.resource.CategoryResource;
+import com.theneilist.everwas.resource.TimePeriodResource;
 import com.theneilist.everwas.resource.TimePointResource;
 import de.thomaskrille.dropwizard_template_config.TemplateConfigBundle;
 import de.thomaskrille.dropwizard_template_config.TemplateConfigBundleConfiguration;
@@ -45,12 +47,16 @@ public class EverwasApplication extends Application<EverwasConfiguration> {
 
         final CategoryDao categoryDao = jdbi.onDemand(CategoryDao.class);
         final TimePointDao timePointDao = jdbi.onDemand(TimePointDao.class);
+        final TimePeriodDao timePeriodDao = jdbi.onDemand(TimePeriodDao.class);
 
         final CategoryResource categoryResource = new CategoryResource(categoryDao);
         environment.jersey().register(categoryResource);
 
         final TimePointResource timePointResource = new TimePointResource(timePointDao);
         environment.jersey().register(timePointResource);
+
+        final TimePeriodResource timePeriodResource = new TimePeriodResource(timePeriodDao);
+        environment.jersey().register(timePeriodResource);
 
     }
 }
