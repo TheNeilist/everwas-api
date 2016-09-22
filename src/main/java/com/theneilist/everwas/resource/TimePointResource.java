@@ -1,12 +1,15 @@
 package com.theneilist.everwas.resource;
 
 import com.codahale.metrics.annotation.Timed;
+import com.theneilist.everwas.DefaultTimeZone;
 import com.theneilist.everwas.api.TimePoint;
 import com.theneilist.everwas.dao.TimePointDao;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
 @Path("/timepoint")
@@ -25,9 +28,10 @@ public class TimePointResource {
     public Response createCategory(final TimePoint timePoint) {
         //TODO: validate category id
         long timePointId = this.timePointDao.insert(timePoint);
+        OffsetDateTime time = OffsetDateTime.from(timePoint.getTime().atZoneSameInstant(DefaultTimeZone.getZoneId()));
         return Response
                 .status(Response.Status.CREATED)
-                .entity(new TimePoint(timePointId, timePoint.getCategoryId(), timePoint.getName(), timePoint.getTime()))
+                .entity(new TimePoint(timePointId, timePoint.getCategoryId(), timePoint.getName(), time))
                 .build();
     }
 
