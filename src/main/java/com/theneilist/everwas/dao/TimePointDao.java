@@ -6,6 +6,7 @@ import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 import org.skife.jdbi.v2.sqlobject.customizers.SingleValueResult;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface TimePointDao {
@@ -20,7 +21,14 @@ public interface TimePointDao {
     @Mapper(TimePointMapper.class)
     Optional<TimePoint> findById(@Bind("id") long id);
 
+    @SqlQuery("select * from time_point where categoryId = :categoryId")
+    @Mapper(TimePointMapper.class)
+    Optional<List<TimePoint>> findByCategoryId(@Bind("categoryId") long categoryId);
+
     @SqlUpdate("delete from time_point where id = :id")
     void delete(@Bind("id") long id);
+
+    @SqlUpdate("delete from time_point")
+    void deleteAll();
 
 }

@@ -5,6 +5,7 @@ import com.theneilist.everwas.dao.CategoryDao;
 import com.theneilist.everwas.dao.TimePeriodDao;
 import com.theneilist.everwas.dao.TimePointDao;
 import com.theneilist.everwas.resource.CategoryResource;
+import com.theneilist.everwas.resource.TimelineResource;
 import com.theneilist.everwas.resource.TimePeriodResource;
 import com.theneilist.everwas.resource.TimePointResource;
 import de.thomaskrille.dropwizard_template_config.TemplateConfigBundle;
@@ -57,6 +58,9 @@ public class EverwasApplication extends Application<EverwasConfiguration> {
 
         final TimePeriodResource timePeriodResource = new TimePeriodResource(timePeriodDao);
         environment.jersey().register(timePeriodResource);
+
+        final TimelineResource timelineResource = new TimelineResource(categoryDao, timePointDao, timePeriodDao);
+        environment.jersey().register(timelineResource);
 
     }
 }

@@ -6,6 +6,7 @@ import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 import org.skife.jdbi.v2.sqlobject.customizers.SingleValueResult;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CategoryDao {
@@ -21,5 +22,12 @@ public interface CategoryDao {
 
     @SqlUpdate("delete from category where id = :id")
     void delete(@Bind("id") long id);
+
+    @SqlQuery("select * from category order by name")
+    @Mapper(CategoryMapper.class)
+    Optional<List<Category>> findAll();
+
+    @SqlUpdate("delete from category")
+    void deleteAll();
 
 }
