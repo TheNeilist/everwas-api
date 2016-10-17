@@ -44,6 +44,14 @@ public class CategoryResource {
     }
 
     @DELETE
+    @Timed
+    public Response deleteAll() {
+        //todo: delete all points and periods first
+        categoryDao.deleteAll();
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+    @DELETE
     @Path("{id}")
     @Timed
     public Response delete(@PathParam("id") Long id) {

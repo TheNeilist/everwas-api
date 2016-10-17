@@ -9,7 +9,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.util.Optional;
 
 @Path("/timepoint")
@@ -49,6 +48,13 @@ public class TimePointResource {
         return timePoint.isPresent() ?
                 Response.ok(timePoint.get()).build() :
                 Response.status(Response.Status.NOT_FOUND).build();
+    }
+
+    @DELETE
+    @Timed
+    public Response deleteAll() {
+        timePointDao.deleteAll();
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @DELETE

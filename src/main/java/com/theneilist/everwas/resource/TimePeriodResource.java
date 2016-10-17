@@ -48,6 +48,13 @@ public class TimePeriodResource {
     }
 
     @DELETE
+    @Timed
+    public Response deleteAll() {
+        timePeriodDao.deleteAll();
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+    @DELETE
     @Path("{id}")
     @Timed
     public Response delete(@PathParam("id") Long id) {

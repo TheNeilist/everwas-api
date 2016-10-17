@@ -25,7 +25,7 @@ public interface CategoryDao {
 
     @SqlQuery("select * from category order by name")
     @Mapper(CategoryMapper.class)
-    Optional<List<Category>> findAll();
+    List<Category> findAll();
 
     @SqlUpdate("delete from category")
     void deleteAll();

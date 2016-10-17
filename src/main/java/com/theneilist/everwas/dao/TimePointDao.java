@@ -21,9 +21,9 @@ public interface TimePointDao {
     @Mapper(TimePointMapper.class)
     Optional<TimePoint> findById(@Bind("id") long id);
 
-    @SqlQuery("select * from time_point where categoryId = :categoryId")
+    @SqlQuery("select * from time_point where category_id = :categoryId")
     @Mapper(TimePointMapper.class)
-    Optional<List<TimePoint>> findByCategoryId(@Bind("categoryId") long categoryId);
+    List<TimePoint> findByCategoryId(@Bind("categoryId") long categoryId);
 
     @SqlUpdate("delete from time_point where id = :id")
     void delete(@Bind("id") long id);
