@@ -1,12 +1,13 @@
 package com.theneilist.everwas.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.theneilist.everwas.api.jsonapi.JsonApiBaseEntity;
 
 import java.time.OffsetDateTime;
 
-public class TimePeriod {
+public class TimePeriod extends BaseApi implements JsonApiBaseEntity {
 
-    private long id;
+    private static final String TYPE = "timeperiod";
     private long categoryId;
     private String name;
     private OffsetDateTime periodStart;
@@ -23,16 +24,11 @@ public class TimePeriod {
     }
 
     public TimePeriod(long id, long categoryId, String name, OffsetDateTime periodStart, OffsetDateTime periodEnd) {
-        this.id = id;
+        super(id, TYPE);
         this.categoryId = categoryId;
         this.name = name;
         this.periodStart = periodStart;
         this.periodEnd = periodEnd;
-    }
-
-    @JsonProperty
-    public long getId() {
-        return id;
     }
 
     @JsonProperty
