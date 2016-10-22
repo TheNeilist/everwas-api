@@ -14,14 +14,14 @@ import static io.restassured.RestAssured.given
 
 class TimelineResourceIntegrationSpec extends Specification {
 
-    @Ignore("fix after all jsonapi stuff done")
     def "test timeline"() {
 
         setup:
         def request = given().contentType("application/json")
         final HOST = "http://localhost:8090"
         final PATH_TIMELINE = HOST + "/timeline/"
-        final PATH_CATEGORY = HOST + "/categories/"
+        final PATH_CATEGORIES= HOST + "/categories/"
+        final PATH_CATEGORY = HOST + "/category/"
         final PATH_PERIOD = HOST + "/timeperiod/"
         final PATH_POINT = HOST + "/timepoint/"
 
@@ -36,11 +36,11 @@ class TimelineResourceIntegrationSpec extends Specification {
         def response = request.body(category1)
                 .post(new URI(PATH_CATEGORY))
                 .then()
-        category1.id = response.extract().path("id")
+        category1.id = response.extract().path("id") as long
         response = request.body(category2)
                 .post(new URI(PATH_CATEGORY))
                 .then()
-        category2.id = response.extract().path("id")
+        category2.id = response.extract().path("id") as long
 
         //add a period to the first category
         final PERIOD1CAT1_NAME = "period1cat1" + System.currentTimeMillis()
@@ -85,7 +85,7 @@ class TimelineResourceIntegrationSpec extends Specification {
         cleanup:
         request.delete(new URI(PATH_POINT)).then()
         request.delete(new URI(PATH_PERIOD)).then()
-        request.delete(new URI(PATH_CATEGORY)).then()
+        request.delete(new URI(PATH_CATEGORIES)).then()
 
     }
 }

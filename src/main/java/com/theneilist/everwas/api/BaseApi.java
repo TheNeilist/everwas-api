@@ -26,6 +26,10 @@ public abstract class BaseApi {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @JsonProperty
     public String getType() {
         return type;
