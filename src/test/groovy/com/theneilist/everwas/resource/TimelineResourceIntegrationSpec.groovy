@@ -14,6 +14,7 @@ import static io.restassured.RestAssured.given
 
 class TimelineResourceIntegrationSpec extends Specification {
 
+    @Ignore("WIP")
     def "test timeline"() {
 
         setup:

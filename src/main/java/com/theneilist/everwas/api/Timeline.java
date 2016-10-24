@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class Timeline extends BaseApi {
+public class Timeline {
 
     private List<CategoryTimeline> categoryTimelines;
 

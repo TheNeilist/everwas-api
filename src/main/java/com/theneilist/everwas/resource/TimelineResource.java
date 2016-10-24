@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/timeline")
+@Path("/timelines")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class TimelineResource {
@@ -35,7 +35,7 @@ public class TimelineResource {
     public Response get() {
 
         final List<Category> categories = categoryDao.findAll();
-        final List<CategoryTimeline> categoryTimelines = new ArrayList<>();
+        final List categoryTimelines = new ArrayList<>();
         for (final Category category : categories) {
             final List<TimePoint> timePoints = timePointDao.findByCategoryId(category.getId());
             final List<TimePeriod> timePeriods = timePeriodDao.findByCategoryId(category.getId());
@@ -47,6 +47,7 @@ public class TimelineResource {
         }
 
         final Timeline timeline = new Timeline(categoryTimelines);
+//        return Response.ok().entity(JsonApiUtil.getPayloadListResponse(categoryTimelines)).build();
         return Response.ok().entity(timeline).build();
 
     }

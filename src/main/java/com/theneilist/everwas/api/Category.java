@@ -39,4 +39,5 @@ public class Category extends BaseApi implements JsonApiBaseEntity {
     public String getName() {
         return name;
     }
+
 }

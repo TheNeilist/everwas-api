@@ -2,17 +2,12 @@ package com.theneilist.everwas.resource;
 
 import com.codahale.metrics.annotation.Timed;
 import com.theneilist.everwas.api.Category;
-import com.theneilist.everwas.api.jsonapi.JsonApiBaseEntity;
-import com.theneilist.everwas.api.jsonapi.JsonApiData;
-import com.theneilist.everwas.api.jsonapi.JsonApiResponse;
 import com.theneilist.everwas.dao.CategoryDao;
 import com.theneilist.everwas.util.JsonApiUtil;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
