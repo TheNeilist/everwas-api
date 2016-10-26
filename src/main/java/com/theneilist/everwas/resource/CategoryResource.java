@@ -2,6 +2,7 @@ package com.theneilist.everwas.resource;
 
 import com.codahale.metrics.annotation.Timed;
 import com.theneilist.everwas.api.Category;
+import com.theneilist.everwas.api.CategoryPost;
 import com.theneilist.everwas.dao.CategoryDao;
 import com.theneilist.everwas.util.JsonApiUtil;
 
@@ -22,17 +23,15 @@ public class CategoryResource {
         this.categoryDao = categoryDao;
     }
 
-    //TODO: get all categories
-    //TODO: return timeline with categories
-
     @POST
-    @Path("category")
+    @Path("categories")
     @Timed
-    public Response create(final Category category) {
-        long categoryId = this.categoryDao.insert(category);
+    public Response create(final CategoryPost categoryPost) {
+        long categoryId = this.categoryDao.insert(categoryPost.getCategory());
+        Category category = new Category(categoryId, categoryPost.getCategory().getParentId(), categoryPost.getCategory().getName());
         return Response
                 .status(Response.Status.CREATED)
-                .entity(new Category(categoryId, category.getParentId(), category.getName()))
+                .entity(new CategoryPost(category))
                 .build();
     }
 
@@ -51,7 +50,7 @@ public class CategoryResource {
     @Timed
     public Response findAll() {
         List categories = categoryDao.findAll();
-        return Response.ok().entity(JsonApiUtil.getPayloadListResponse(categories)).build();
+        return Response.ok().entity(categories).build();
     }
 
     @DELETE

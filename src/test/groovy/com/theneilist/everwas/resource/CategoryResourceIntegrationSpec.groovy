@@ -1,6 +1,7 @@
 package com.theneilist.everwas.resource
 
 import com.theneilist.everwas.api.Category
+import com.theneilist.everwas.api.CategoryPost
 
 import static io.restassured.RestAssured.*
 import spock.lang.Specification
@@ -18,14 +19,14 @@ class CategoryResourceIntegrationSpec extends Specification {
 
         when: "create new category"
         def response = request
-                .body(category)
-                .post(new URI(PATH_CATEGORY))
+                .body(new CategoryPost(category))
+                .post(new URI(PATH_CATEGORIES))
                 .then()
 
         then: "201 response and return new category"
         response.statusCode(201)
-        assert NAME == response.extract().path("name")
-        final ID = response.extract().path("id")
+        assert NAME == response.extract().path("category.name")
+        final ID = response.extract().path("category.id")
         assert ID != null
 
         when: "find created category by id"
