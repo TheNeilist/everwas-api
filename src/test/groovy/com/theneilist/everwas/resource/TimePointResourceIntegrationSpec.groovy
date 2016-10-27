@@ -1,6 +1,7 @@
 package com.theneilist.everwas.resource
 
 import com.theneilist.everwas.api.TimePoint
+import com.theneilist.everwas.api.TimePointWrapper
 import io.restassured.http.ContentType
 import spock.lang.Specification
 
@@ -13,7 +14,7 @@ class TimePointResourceIntegrationSpec extends Specification {
     def "test timePoint crud"() {
 
         setup:
-        final BASE_PATH = "http://localhost:8090/timepoint/"
+        final BASE_PATH = "http://localhost:8090/timepoints/"
         final NAME = System.currentTimeMillis() as String
         final TIME = OffsetDateTime.now()
         final CATEGORY_ID = 0L
@@ -23,7 +24,7 @@ class TimePointResourceIntegrationSpec extends Specification {
         when: "create new timePoint"
         def response = request
                 .contentType(ContentType.JSON)
-                .body(timePoint)
+                .body(new TimePointWrapper(timePoint))
                 .post(new URI(BASE_PATH))
                 .then()
         def createTimePointResponse = response.extract().body().as(TimePoint.class)

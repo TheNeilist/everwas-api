@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
 
-@Path("/")
+@Path("categories")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CategoryResource {
@@ -24,7 +24,6 @@ public class CategoryResource {
     }
 
     @POST
-    @Path("categories")
     @Timed
     public Response create(final CategoryWrapper categoryWrapper) {
         long categoryId = this.categoryDao.insert(categoryWrapper.getCategory());
@@ -36,7 +35,7 @@ public class CategoryResource {
     }
 
     @GET
-    @Path("category/{id}")
+    @Path("{id}")
     @Timed
     public Response get(@PathParam("id") Long id) {
         final Optional<Category> category = categoryDao.findById(id);
@@ -46,7 +45,6 @@ public class CategoryResource {
     }
 
     @GET
-    @Path("categories")
     @Timed
     public Response findAll() {
         List<Category> categories = categoryDao.findAll();
@@ -54,7 +52,6 @@ public class CategoryResource {
     }
 
     @DELETE
-    @Path("categories")
     @Timed
     public Response deleteAll() {
         //todo: delete all points and periods first
@@ -63,7 +60,7 @@ public class CategoryResource {
     }
 
     @DELETE
-    @Path("category/{id}")
+    @Path("{id}")
     @Timed
     public Response delete(@PathParam("id") Long id) {
         final Optional<Category> category = categoryDao.findById(id);

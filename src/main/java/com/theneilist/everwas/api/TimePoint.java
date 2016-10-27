@@ -9,9 +9,9 @@ import com.theneilist.everwas.api.serializers.OffsetDateTimeSerializer;
 
 import java.time.OffsetDateTime;
 
-public class TimePoint extends BaseApi implements JsonApiBaseEntity {
+public class TimePoint {
 
-    private static final String TYPE = "timepoint";
+    private long id;
     private long categoryId;
     private String name;
     @JsonSerialize(using = OffsetDateTimeSerializer.class)
@@ -28,10 +28,15 @@ public class TimePoint extends BaseApi implements JsonApiBaseEntity {
     }
 
     public TimePoint(long id, long categoryId, String name, OffsetDateTime time) {
-        super(id, TYPE);
+        this.id = id;
         this.categoryId = categoryId;
         this.name = name;
         this.time = time;
+    }
+
+    @JsonProperty
+    public long getId() {
+        return id;
     }
 
     @JsonProperty

@@ -3,6 +3,7 @@ package com.theneilist.everwas.resource;
 import com.codahale.metrics.annotation.Timed;
 import com.theneilist.everwas.DefaultTimeZone;
 import com.theneilist.everwas.api.TimePoint;
+import com.theneilist.everwas.api.TimePointWrapper;
 import com.theneilist.everwas.dao.TimePointDao;
 
 import javax.ws.rs.*;
@@ -11,7 +12,7 @@ import javax.ws.rs.core.Response;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
-@Path("/timepoint")
+@Path("/timepoints")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class TimePointResource {
@@ -24,8 +25,9 @@ public class TimePointResource {
 
     @POST
     @Timed
-    public Response create(final TimePoint timePoint) {
+    public Response create(final TimePointWrapper timePointWrapper) {
         //TODO: validate category id
+        final TimePoint timePoint = timePointWrapper.getTimepoint();
         long timePointId = this.timePointDao.insert(timePoint);
         OffsetDateTime time = OffsetDateTime.from(timePoint.getTime().atZoneSameInstant(DefaultTimeZone.getZoneId()));
         return Response

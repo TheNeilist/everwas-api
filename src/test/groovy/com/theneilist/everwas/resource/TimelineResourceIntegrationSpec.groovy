@@ -2,6 +2,7 @@ package com.theneilist.everwas.resource
 
 import com.theneilist.everwas.api.Category
 import com.theneilist.everwas.api.CategoryWrapper
+import com.theneilist.everwas.api.TimePointWrapper
 import com.theneilist.everwas.api.Timeline
 import com.theneilist.everwas.api.TimePeriod
 import com.theneilist.everwas.api.TimePoint
@@ -23,14 +24,13 @@ class TimelineResourceIntegrationSpec extends Specification {
         final HOST = "http://localhost:8090"
         final PATH_TIMELINE = HOST + "/timeline/"
         final PATH_CATEGORIES= HOST + "/categories/"
-        final PATH_CATEGORY = HOST + "/category/"
         final PATH_PERIOD = HOST + "/timeperiod/"
-        final PATH_POINT = HOST + "/timepoint/"
+        final PATH_POINT = HOST + "/timepoints/"
 
         //delete everything
         request.delete(new URI(PATH_POINT)).then()
         request.delete(new URI(PATH_PERIOD)).then()
-        request.delete(new URI(PATH_CATEGORY)).then()
+        request.delete(new URI(PATH_CATEGORIES)).then()
 
         //create a couple categories
         def category1 = new Category("cat1" + System.currentTimeMillis())
@@ -57,7 +57,7 @@ class TimelineResourceIntegrationSpec extends Specification {
         final POINT1CAT2_NAME = "point1cat2" + System.currentTimeMillis() as String
         final POINT1CAT2_TIME = OffsetDateTime.now()
         def point1cat2 = new TimePoint(category2.id, POINT1CAT2_NAME, POINT1CAT2_TIME)
-        response = request.body(point1cat2)
+        response = request.body(new TimePointWrapper(point1cat2))
                 .post(new URI(PATH_POINT))
                 .then()
 
