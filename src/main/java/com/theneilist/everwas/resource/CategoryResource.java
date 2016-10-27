@@ -1,10 +1,10 @@
 package com.theneilist.everwas.resource;
 
 import com.codahale.metrics.annotation.Timed;
+import com.theneilist.everwas.api.Categories;
 import com.theneilist.everwas.api.Category;
-import com.theneilist.everwas.api.CategoryPost;
+import com.theneilist.everwas.api.CategoryWrapper;
 import com.theneilist.everwas.dao.CategoryDao;
-import com.theneilist.everwas.util.JsonApiUtil;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -26,12 +26,12 @@ public class CategoryResource {
     @POST
     @Path("categories")
     @Timed
-    public Response create(final CategoryPost categoryPost) {
-        long categoryId = this.categoryDao.insert(categoryPost.getCategory());
-        Category category = new Category(categoryId, categoryPost.getCategory().getParentId(), categoryPost.getCategory().getName());
+    public Response create(final CategoryWrapper categoryWrapper) {
+        long categoryId = this.categoryDao.insert(categoryWrapper.getCategory());
+        Category category = new Category(categoryId, categoryWrapper.getCategory().getParentId(), categoryWrapper.getCategory().getName());
         return Response
                 .status(Response.Status.CREATED)
-                .entity(new CategoryPost(category))
+                .entity(new CategoryWrapper(category))
                 .build();
     }
 
@@ -49,8 +49,8 @@ public class CategoryResource {
     @Path("categories")
     @Timed
     public Response findAll() {
-        List categories = categoryDao.findAll();
-        return Response.ok().entity(categories).build();
+        List<Category> categories = categoryDao.findAll();
+        return Response.ok().entity(new Categories(categories)).build();
     }
 
     @DELETE

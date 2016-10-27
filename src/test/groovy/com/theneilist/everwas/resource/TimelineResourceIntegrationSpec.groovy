@@ -1,10 +1,11 @@
 package com.theneilist.everwas.resource
 
 import com.theneilist.everwas.api.Category
-import com.theneilist.everwas.api.CategoryTimeline
+import com.theneilist.everwas.api.CategoryWrapper
+import com.theneilist.everwas.api.Timeline
 import com.theneilist.everwas.api.TimePeriod
 import com.theneilist.everwas.api.TimePoint
-import com.theneilist.everwas.api.Timeline
+import com.theneilist.everwas.api.Timelines
 import spock.lang.Ignore
 import spock.lang.Specification
 
@@ -34,14 +35,14 @@ class TimelineResourceIntegrationSpec extends Specification {
         //create a couple categories
         def category1 = new Category("cat1" + System.currentTimeMillis())
         def category2 = new Category("cat2" + System.currentTimeMillis())
-        def response = request.body(category1)
-                .post(new URI(PATH_CATEGORY))
+        def response = request.body(new CategoryWrapper(category1))
+                .post(new URI(PATH_CATEGORIES))
                 .then()
-        category1.id = response.extract().path("id") as long
-        response = request.body(category2)
-                .post(new URI(PATH_CATEGORY))
+        category1.id = response.extract().path("category.id") as long
+        response = request.body(new CategoryWrapper(category2))
+                .post(new URI(PATH_CATEGORIES))
                 .then()
-        category2.id = response.extract().path("id") as long
+        category2.id = response.extract().path("category.id") as long
 
         //add a period to the first category
         final PERIOD1CAT1_NAME = "period1cat1" + System.currentTimeMillis()
@@ -63,13 +64,13 @@ class TimelineResourceIntegrationSpec extends Specification {
         when: "get timeline"
         response = request.get(new URI(PATH_TIMELINE))
                 .then()
-        def timeline = response.extract().body().as(Timeline.class)
+        def timeline = response.extract().body().as(Timelines.class)
 
         then: "got timeline"
         assert timeline.categoryTimelines.size() == 2
         def foundCategory1 = false;
         def foundCategory2 = false;
-        for (CategoryTimeline categoryTimeline : timeline.categoryTimelines) {
+        for (Timeline categoryTimeline : timeline.categoryTimelines) {
             if (categoryTimeline.category.id == category1.id) {
                 foundCategory1 = true
                 assert categoryTimeline.timePoints.size() == 0

@@ -35,20 +35,19 @@ public class TimelineResource {
     public Response get() {
 
         final List<Category> categories = categoryDao.findAll();
-        final List categoryTimelines = new ArrayList<>();
+        List<Timeline> timelineList = new ArrayList<>();
         for (final Category category : categories) {
             final List<TimePoint> timePoints = timePointDao.findByCategoryId(category.getId());
             final List<TimePeriod> timePeriods = timePeriodDao.findByCategoryId(category.getId());
-            final CategoryTimeline categoryTimeline = new CategoryTimeline(
+            final Timeline timeline = new Timeline(
                     category,
                     timePeriods,
                     timePoints);
-            categoryTimelines.add(categoryTimeline);
+            timelineList.add(timeline);
         }
 
-        final Timeline timeline = new Timeline(categoryTimelines);
-//        return Response.ok().entity(JsonApiUtil.getPayloadListResponse(categoryTimelines)).build();
-        return Response.ok().entity(timeline).build();
+        final Timelines timelines = new Timelines(timelineList);
+        return Response.ok().entity(timelines).build();
 
     }
 }

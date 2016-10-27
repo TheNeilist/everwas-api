@@ -1,7 +1,7 @@
 package com.theneilist.everwas.resource
 
 import com.theneilist.everwas.api.Category
-import com.theneilist.everwas.api.CategoryPost
+import com.theneilist.everwas.api.CategoryWrapper
 
 import static io.restassured.RestAssured.*
 import spock.lang.Specification
@@ -19,7 +19,7 @@ class CategoryResourceIntegrationSpec extends Specification {
 
         when: "create new category"
         def response = request
-                .body(new CategoryPost(category))
+                .body(new CategoryWrapper(category))
                 .post(new URI(PATH_CATEGORIES))
                 .then()
 
