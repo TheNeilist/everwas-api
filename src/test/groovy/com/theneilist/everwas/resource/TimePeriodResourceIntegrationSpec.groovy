@@ -1,6 +1,7 @@
 package com.theneilist.everwas.resource
 
 import com.theneilist.everwas.api.TimePeriod
+import com.theneilist.everwas.api.TimePeriodWrapper
 import io.restassured.http.ContentType
 import spock.lang.Specification
 
@@ -13,7 +14,7 @@ class TimePeriodResourceIntegrationSpec extends Specification {
     def "test timePeriod crud"() {
 
         setup:
-        final BASE_PATH = "http://localhost:8090/timeperiod/"
+        final BASE_PATH = "http://localhost:8090/timeperiods/"
         final NAME = System.currentTimeMillis() as String
         final PERIOD_START = OffsetDateTime.now()
         final PERIOD_END = PERIOD_START.plusDays(100)
@@ -24,7 +25,7 @@ class TimePeriodResourceIntegrationSpec extends Specification {
         when: "create new timePeriod"
         def response = request
                 .contentType(ContentType.JSON)
-                .body(timePeriod)
+                .body(new TimePeriodWrapper(timePeriod))
                 .post(new URI(BASE_PATH))
                 .then()
         def createTimePeriodResponse = response.extract().body().as(TimePeriod.class)

@@ -3,6 +3,7 @@ package com.theneilist.everwas.resource;
 import com.codahale.metrics.annotation.Timed;
 import com.theneilist.everwas.DefaultTimeZone;
 import com.theneilist.everwas.api.TimePeriod;
+import com.theneilist.everwas.api.TimePeriodWrapper;
 import com.theneilist.everwas.api.TimePoint;
 import com.theneilist.everwas.dao.TimePeriodDao;
 import com.theneilist.everwas.dao.TimePointDao;
@@ -13,7 +14,7 @@ import javax.ws.rs.core.Response;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
-@Path("/timeperiod")
+@Path("/timeperiods")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class TimePeriodResource {
@@ -26,11 +27,12 @@ public class TimePeriodResource {
 
     @POST
     @Timed
-    public Response create(final TimePeriod timePeriod) {
+    public Response create(final TimePeriodWrapper timePeriodWrapper) {
         //TODO: validate category id
-        long timePointId = this.timePeriodDao.insert(timePeriod);
-        OffsetDateTime periodStart = OffsetDateTime.from(timePeriod.getPeriodStart().atZoneSameInstant(DefaultTimeZone.getZoneId()));
-        OffsetDateTime periodEnd= OffsetDateTime.from(timePeriod.getPeriodEnd().atZoneSameInstant(DefaultTimeZone.getZoneId()));
+        final TimePeriod timePeriod = timePeriodWrapper.getTimeperiod();
+        final long timePointId = this.timePeriodDao.insert(timePeriod);
+        final OffsetDateTime periodStart = OffsetDateTime.from(timePeriod.getPeriodStart().atZoneSameInstant(DefaultTimeZone.getZoneId()));
+        final OffsetDateTime periodEnd= OffsetDateTime.from(timePeriod.getPeriodEnd().atZoneSameInstant(DefaultTimeZone.getZoneId()));
         return Response
                 .status(Response.Status.CREATED)
                 .entity(new TimePeriod(timePointId, timePeriod.getCategoryId(), timePeriod.getName(), periodStart, periodEnd))

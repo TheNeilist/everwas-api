@@ -3,15 +3,14 @@ package com.theneilist.everwas.api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.theneilist.everwas.api.jsonapi.JsonApiBaseEntity;
 import com.theneilist.everwas.api.serializers.OffsetDateTimeDeserializer;
 import com.theneilist.everwas.api.serializers.OffsetDateTimeSerializer;
 
 import java.time.OffsetDateTime;
 
-public class TimePeriod extends BaseApi implements JsonApiBaseEntity {
+public class TimePeriod {
 
-    private static final String TYPE = "timeperiod";
+    private long id;
     private long categoryId;
     private String name;
     @JsonSerialize(using = OffsetDateTimeSerializer.class)
@@ -32,11 +31,16 @@ public class TimePeriod extends BaseApi implements JsonApiBaseEntity {
     }
 
     public TimePeriod(long id, long categoryId, String name, OffsetDateTime periodStart, OffsetDateTime periodEnd) {
-        super(id, TYPE);
+        this.id = id;
         this.categoryId = categoryId;
         this.name = name;
         this.periodStart = periodStart;
         this.periodEnd = periodEnd;
+    }
+
+    @JsonProperty
+    public long getId() {
+        return id;
     }
 
     @JsonProperty

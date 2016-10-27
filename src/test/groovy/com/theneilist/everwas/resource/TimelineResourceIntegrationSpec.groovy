@@ -2,6 +2,7 @@ package com.theneilist.everwas.resource
 
 import com.theneilist.everwas.api.Category
 import com.theneilist.everwas.api.CategoryWrapper
+import com.theneilist.everwas.api.TimePeriodWrapper
 import com.theneilist.everwas.api.TimePointWrapper
 import com.theneilist.everwas.api.Timeline
 import com.theneilist.everwas.api.TimePeriod
@@ -24,7 +25,7 @@ class TimelineResourceIntegrationSpec extends Specification {
         final HOST = "http://localhost:8090"
         final PATH_TIMELINE = HOST + "/timeline/"
         final PATH_CATEGORIES= HOST + "/categories/"
-        final PATH_PERIOD = HOST + "/timeperiod/"
+        final PATH_PERIOD = HOST + "/timeperiods/"
         final PATH_POINT = HOST + "/timepoints/"
 
         //delete everything
@@ -49,7 +50,7 @@ class TimelineResourceIntegrationSpec extends Specification {
         final PERIOD1CAT1_START = OffsetDateTime.now()
         final PERIOD1CAT1_END = PERIOD1CAT1_START.plusDays(1)
         def period1cat1 = new TimePeriod(category1.id, PERIOD1CAT1_NAME, PERIOD1CAT1_START, PERIOD1CAT1_END)
-        response = request.body(period1cat1)
+        response = request.body(new TimePeriodWrapper(period1cat1))
                 .post(new URI(PATH_PERIOD))
                 .then()
 
