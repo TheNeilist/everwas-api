@@ -8,6 +8,9 @@ public class Timelines {
 
     private List<Timeline> timelines;
 
+    public Timelines() {
+    }
+
     public Timelines(List<Timeline> timelines) {
         this.timelines = timelines;
     }
