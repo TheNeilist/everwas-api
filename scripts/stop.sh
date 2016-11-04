@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if [ -a /tmp/everwas-api-pid ]
         then
                 EVERWAS_API_PID=$(cat /tmp/everwas-api-pid)
