@@ -4,10 +4,8 @@ import com.google.common.base.Charsets;
 import com.theneilist.everwas.dao.CategoryDao;
 import com.theneilist.everwas.dao.TimePeriodDao;
 import com.theneilist.everwas.dao.TimePointDao;
-import com.theneilist.everwas.resource.CategoryResource;
-import com.theneilist.everwas.resource.TimelineResource;
-import com.theneilist.everwas.resource.TimePeriodResource;
-import com.theneilist.everwas.resource.TimePointResource;
+import com.theneilist.everwas.dao.UserDao;
+import com.theneilist.everwas.resource.*;
 import de.thomaskrille.dropwizard_template_config.TemplateConfigBundle;
 import de.thomaskrille.dropwizard_template_config.TemplateConfigBundleConfiguration;
 import io.dropwizard.Application;
@@ -62,6 +60,7 @@ public class EverwasApplication extends Application<EverwasConfiguration> {
         final CategoryDao categoryDao = jdbi.onDemand(CategoryDao.class);
         final TimePointDao timePointDao = jdbi.onDemand(TimePointDao.class);
         final TimePeriodDao timePeriodDao = jdbi.onDemand(TimePeriodDao.class);
+        final UserDao userDao = jdbi.onDemand(UserDao.class);
 
         final CategoryResource categoryResource = new CategoryResource(categoryDao);
         environment.jersey().register(categoryResource);
@@ -74,6 +73,9 @@ public class EverwasApplication extends Application<EverwasConfiguration> {
 
         final TimelineResource timelineResource = new TimelineResource(categoryDao, timePointDao, timePeriodDao);
         environment.jersey().register(timelineResource);
+
+        final UserResource userResource = new UserResource(userDao);
+        environment.jersey().register(userResource);
 
     }
 }
